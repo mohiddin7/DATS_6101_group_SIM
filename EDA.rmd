@@ -2,7 +2,8 @@
 title: "EDA"
 author: "TEAM SIM"
 date: "2023-03-23"
-output: html_document:
+output: 
+   html_document:
     code_folding: hide
     number_sections: false
     toc: yes
