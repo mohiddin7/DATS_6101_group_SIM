@@ -270,11 +270,11 @@ legend("topleft",
 ```
 The above code is manipulating and visualizing the "Votes" variable of the "IMDB" data frame, removing commas, converting to numeric, and plotting its distribution and a line plot.
 
-
+### Cleaning and Formatting Duration variable
 ```{r, results='asis'}
 non_numeric_Duration <- IMDB$Duration[!is.numeric(IMDB$Duration)]
 
-# Get unique non-numeric values in "Votes"
+# Get unique non-numeric values in "Duration"
 unique(non_numeric_Duration)
 
 # Remove rows with "None" from data frame
@@ -344,8 +344,9 @@ legend("topleft",
        lty = c(1, 2), 
        lwd = c(2, 1))
 ```
+The above code first checks for non-numeric values in Duration variable, removes rows with "None" value, converts Duration variable from character to integer data type, prints summary statistics of the data frame, and then creates histograms and line plots to visualize the distribution of Duration variable.
 
-
+### Cleaning and Formatting Genre variable
 ```{r}
 head(IMDB$Genre)
 ```
@@ -386,6 +387,10 @@ g_hc <- g_df  %>%
 htmlwidgets::saveWidget(ghtml, file = "ghtml.html")
 ghtml
 ```
+The above code reads in data about movies from IMDB, cleans and processes it to remove any missing or non-numeric values in the "Duration" column and split and clean the "Genre" column. It then creates visualizations of the cleaned data using highcharter library, including a histogram and line plot of the duration of movies, as well as a pie chart of the frequency of different movie genres in the dataset. The resulting plots and chart are saved as HTML files.
+
+
+
 
 
 
