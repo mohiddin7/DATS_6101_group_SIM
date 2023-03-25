@@ -410,6 +410,7 @@ class(IMDB$Episodes)
 
 summary(IMDB)
 ```
+The above code replaces any hyphens in the "Episodes" column of the IMDB dataset with zeros, converts the column to numeric format, and saves the updated dataset as a CSV file.
 
 
 ```{r}
@@ -421,7 +422,9 @@ IMDB$Duration <- ifelse(IMDB$Type == "Series" & IMDB$Duration > 200, IMDB$Durati
 
 summary(IMDB)
 ```
-
+The above code first replaces any hyphens in the "Episodes" column with zeros, and then converts it to a numeric data type.
+Next, it filters rows in the "IMDB" dataframe where the "Type" column is "Series" and the "Duration" column is greater than 200, and stores the resulting dataframe in "countn".
+Then, for rows where "Type" is "Series" and "Duration" is greater than 200, it divides the "Duration" column by the "Episodes" column, otherwise it leaves it unchanged. Finally, it prints a summary of the "IMDB" dataframe.
 
 ```{r}
 plot(IMDB[order(IMDB$Duration),]$Duration, 
@@ -447,6 +450,8 @@ legend("topleft",
        lty = c(1, 2), 
        lwd = c(2, 1))
 ```
+The above code creates a line plot of IMDB movie duration with a horizontal dashed line indicating the mean duration, and adds a legend.
+
 ```{r}
 summary(IMDB)
 IMDB$Type <- as.factor(IMDB$Type)
