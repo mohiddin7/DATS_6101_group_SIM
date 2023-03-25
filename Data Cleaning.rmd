@@ -364,8 +364,9 @@ unique(unlist(strsplit(IMDB$Genre, ",")))
 
 ```{r}
 library(highcharter)
-
 library(tidyr)
+
+df <- IMDB %>% separate_rows(Genre, sep = ",")
 
 tidy_genres <- function(IMDB) {
   df %>%
