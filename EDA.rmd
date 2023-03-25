@@ -189,11 +189,6 @@ Result : Calculated the summary statistics and plotted the distribution of rate 
 
 ## For both Film & Series:
 ```{r}
-library(ggplot2)
-library(plotly)
-
-
-
 # Plot films and series on the same scatter plot
 PVR <- ggplot() +
   # Films
@@ -217,8 +212,6 @@ Result : Plotted both film & Series using Scatter plot.
 
 ## For Genre:
 ```{r}
-
-library(tidyr)
 df <- IMDB %>% separate_rows(Genre, sep = ",")
 
 tidy_genres <- function(IMDB) {
@@ -247,7 +240,7 @@ ggplotly(PGRA)
 ```
 Result : Average rating and bar plot was calculated for each genre.
 
-## 
+## Colours for Each Genre:
 ```{r}
 
 df_tidy <- df %>%
@@ -272,13 +265,10 @@ ggplotly(PGR)
 
 
 ```
+Result : Colours are assigned to each of the genre to under the analysis results better.
 
-
-
+## Box plot for Genre:
 ```{r}
-library(ggplot2)
-
-
 genre_colors <- c("Action" = "#FFA500", "Adventure" = "#FFC0CB", "Thriller" = "#FFD700",
                   "Crime" = "#00FFFF", "Drama" = "#4169E1", "Sci-Fi" = "#9400D3",
                   "Comedy" = "#32CD32", "Sport" = "#FF69B4", "Horror" = "#FF4500",
@@ -296,7 +286,7 @@ ggplot(data = IMDB, aes(x = Certificate, y = Rate)) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
 ```
-
+Result : Plotted a Box plot to understand the analysis on genre better.
 
 
 ```{r}
@@ -308,12 +298,11 @@ PTR <- ggplot(data = IMDB, aes(x = Type, y = Rate, fill = Type)) +
   scale_fill_manual(values = c("#A90500", "#0012A9"))
 ggplotly(PTR)
 ```
+Result : Plotted a box plot to understand the distribution of ratings by type.
 
+## Duration and IMDB rating:
 
 ```{r}
-library(ggplot2)
-library(plotly)
-
 # create scatter plot
 p <- ggplot(data = IMDB, aes(x = Duration, y = Rate)) +
   geom_point(size = 0.5) +
@@ -330,12 +319,11 @@ p <- ggplot(data = IMDB, aes(x = Duration, y = Rate)) +
 ggplotly(p)
 
 ```
+Result : Plotted a scatter plot with a regression line to understand the relationship between IMDB rating and duration.
 
 
+## IMDB Rating and votes:
 ```{r}
-library(ggplot2)
-library(plotly)
-
 # create scatter plot
 p <- ggplot(data = IMDB, aes(x = Votes, y = Rate)) +
   geom_point(size = 0.5) +
@@ -352,14 +340,10 @@ p <- ggplot(data = IMDB, aes(x = Votes, y = Rate)) +
 ggplotly(p)
 
 ```
+Result : Plotted a scatter plot with a regression line to understand the relationship between IMDB rating and votes.
 
-
-
+## IMDB Series rating and Episodes:
 ```{r}
-
-library(ggplot2)
-library(plotly)
-
 # create scatter plot
 p <- ggplot(data = IMDB_Series, aes(x = Episodes, y = Rate)) +
   geom_point(size = 0.5) +
@@ -376,12 +360,12 @@ p <- ggplot(data = IMDB_Series, aes(x = Episodes, y = Rate)) +
 ggplotly(p)
 
 ```
+Result : Plotted a scatter plot with a regression line to understand the relationship between IMDB series rating and episodes.
 
 
 
 
-
-
+## IMDB rating and content rating:
 ```{r}
 # create scatter plot
 ggplot(data = IMDB, aes(x = Rate, y = Nudity)) +
@@ -407,6 +391,7 @@ ggplot(data = IMDB, aes(x = Rate, y = Nudity)) +
                                 Frightening = "orange"))
 
 ```
+Result : Plotted a scatter plot to understand the relationship between IMDB rating and content ratings.
 
 
 
@@ -414,13 +399,8 @@ ggplot(data = IMDB, aes(x = Rate, y = Nudity)) +
 
 
 
-
-
+## Correlation heat map:
 ```{r}
-library(ggcorrplot)
-
-library(dplyr)
-
 # Select relevant numeric variables for correlation matrix
 numeric_vars <- IMDB %>% 
   select_if(is.numeric)
@@ -431,9 +411,9 @@ cor_matrix <- cor(numeric_vars)
 ggcorrplot(cor_matrix, type = "lower", hc.order = TRUE, lab = TRUE)
 
 ```
+Results : Computed the correlation matrix and created a heat map using ggcorrplot.
 
-
-
+## Ratings and the Characteristics of Film & Series:
 ```{r}
 PRN <- ggplot(data = IMDB, aes(x = Nudity, y = Rate, fill = Nudity)) + 
   geom_boxplot() +
@@ -480,6 +460,7 @@ PRF <- ggplot(data = IMDB, aes(x = Frightening, y = Rate, fill = Frightening)) +
 ggplotly(PRF)
 
 ```
+Results : Plotted the Box plot to understand the Distribution of Rating by nudity, violence, profanity, alcohol, frightening.
 
 
 
