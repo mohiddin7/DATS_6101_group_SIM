@@ -476,68 +476,82 @@ Results : Plotted the Box plot to understand the Distribution of Rating by nudit
 
 
 
-```{r}
-library(stats)
 
-# Fit the ANOVA model
+### Analysis of Variance
+
+
+## Anova for Content variables with both Film and Series
+
+```{r}
 aov_model <- aov(Rate ~ Nudity + Violence + Profanity + Alcohol + Frightening, data = IMDB)
 
-# Get the ANOVA table
-aov_output <- summary(model)
+aov_output <- summary(aov_model)
 
-# Print the ANOVA table
 print(aov_output)
-
-
-# This table seems to be the output of an ANOVA (Analysis of Variance) test on the relationship between the different content ratings (Nudity, Violence, Profanity, Alcohol, and Frightening) and some other variable(s) in the dataset.
-# 
-# The first column lists the different content ratings, the second column shows the degrees of freedom (DF) for each rating, the third column shows the sum of squares (Sum Sq) for each rating, and the fourth column shows the mean sum of squares (Mean Sq) for each rating.
-# 
-# The fifth column shows the F-value, which is a measure of the variation between the groups relative to the variation within the groups. The larger the F-value, the more significant the relationship between the variable(s) being tested and the content rating.
-# 
-# The sixth column shows the p-value (Pr(>F)), which represents the probability of observing a F-value as extreme or more extreme than the one obtained, assuming that there is no relationship between the variable(s) being tested and the content rating. The lower the p-value, the more significant the relationship.
-# 
-# In this table, the variables Violence, Profanity, Alcohol, and Frightening all have p-values less than 0.05, which suggests that there is a statistically significant relationship between each of these variables and the content rating. The variable Nudity has a p-value greater than 0.05, which suggests that there is no significant relationship between this variable and the content rating.
 ```
 
+The variables of Violence, Profanity, Alcohol, and Frightening have a significant difference between them, while the Nudity variable does not have a significant difference. This table provides valuable insights into the differences between the variables in the dataset.
 
 
 
-
+## Anova for Content variables with Film
 
 ```{r}
-# Fit the ANOVA model
 aov_model_film <- aov(Rate ~ Nudity + Violence + Profanity + Alcohol + Frightening, data = IMDB_Film)
 
-# Get the ANOVA table
 aov_film_output <- summary(aov_model_film)
 
-# Print the ANOVA table
 print(aov_film_output)
 ```
+From the table, we can see that all of the variables have a significant difference between them, with Alcohol and Frightening having the highest F-values and the lowest p-values, indicating that the difference between their average values is the most significant.
+
+The Nudity, Violence, and Profanity variables also have a significant difference, but not as significant as Alcohol and Frightening.
+
+
+## Anova for Content variables with Series
+
 
 ```{r}
-# Fit the ANOVA model
 aov_model_series <- aov(Rate ~ Nudity + Violence + Profanity + Alcohol + Frightening, data = IMDB_Series)
 
-# Get the ANOVA table
 aov_series_output <- summary(aov_model_series)
 
-# Print the ANOVA table
 print(aov_series_output)
 ```
+From the table, we can see that all of the variables have a significant difference between them, with Violence having the highest F-value and the lowest p-value, indicating that the difference between its average value and the others is the most significant.
+
+The other variables of Nudity, Profanity, Alcohol, and Frightening also have a significant difference, but not as significant as Violence.
+
+
+## Anova for Nudity with Both (Film and series), Film & Series 
 ```{r}
 summary(aov(Rate~Nudity,data=IMDB))
 summary(aov(Rate~Nudity,data=IMDB_Film))
 summary(aov(Rate~Nudity,data=IMDB_Series))
 ```
+Film and Series : From the table, we can see that there is no significant difference between the average values of Nudity in the dataset. This is because the p-value is higher than the commonly used alpha level of 0.05.
+
+Film : From the table, we can see that the p-value is less than the commonly used alpha level of 0.05, which indicates that there is a significant difference between the average values of Nudity in the dataset. The asterisks (**), next to the p-value, indicate the level of significance; in this case, two asterisks indicate a p-value less than 0.01.
+
+Series: From the table, we can see that the p-value is less than the commonly used alpha level of 0.05, which indicates that there is a significant difference between the average values of Nudity in the dataset.The asterisk (*) next to the p-value indicates the level of significance, where a single asterisk indicates a p-value less than 0.05.
+
+
+
+## Anova for Violence with Both (Film and series), Film & Series 
+
 
 ```{r}
 summary(aov(Rate~Violence,data=IMDB))
 summary(aov(Rate~Violence,data=IMDB_Film))
 summary(aov(Rate~Violence,data=IMDB_Series))
 ```
+Film and Series : In this case, the variable "Violence" has a significant effect on the outcome variable, as the p-value is less than 0.05 (indicated by "*"). Therefore, we reject the null hypothesis that the variable "Violence" has no effect on the outcome variable.
 
+Film : The table indicates that there is a significant difference between groups (p < 0.01), meaning that the "Violence" variable varies significantly depending on Rate
+
+Series : The results indicate that there is a significant effect of "Violence" on "Rate", as evidenced by the very small p-value (7.4e-06) and the significant F value (8.95). Therefore, we can conclude that "Violence" has a significant impact on the ratings of TV series in this dataset.
+
+For the variable Violence, there is a statistically significant effect on Rate in all three datasets (p < 0.01), indicating that the amount of violence in a movie or TV show is related to the audience's rating of it.
 
 
 ```{r}
@@ -546,18 +560,22 @@ summary(aov(Rate~Profanity,data=IMDB_Film))
 summary(aov(Rate~Profanity,data=IMDB_Series))
 ```
 
+These are the ANOVA results for the relationship between "Rate" and "Profanity" in the "IMDB", "IMDB_Film", and "IMDB_Series" datasets. In all three datasets, the "Profanity" variable is significant at the p < .01 level, indicating a significant relationship between the amount of profanity in a movie or series and its rating.
+
 ```{r}
 summary(aov(Rate~Alcohol,data=IMDB))
 summary(aov(Rate~Alcohol,data=IMDB_Film))
 summary(aov(Rate~Alcohol,data=IMDB_Series))
 ```
-
+For the variable Alcohol, there is a statistically significant effect on Rate in all three datasets (p < 0.01), indicating that the portrayal of alcohol in movies and TV shows affects how the audience rates them.
 
 ```{r}
 summary(aov(Rate~Frightening,data=IMDB))
 summary(aov(Rate~Frightening,data=IMDB_Film))
 summary(aov(Rate~Frightening,data=IMDB_Series))
 ```
+
+
 
 
 
@@ -591,10 +609,5 @@ summary(lm(Rate ~ Episodes, data = IMDB_Series))
 ```
 
 
-```{r}
-chisq.test(IMDB$Rate, IMDB$Violence)
-
-
-```
 
 
