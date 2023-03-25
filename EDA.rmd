@@ -28,7 +28,6 @@ options(scientific=T, digits = 3)
 
 ```{r}
 IMDB <- read.csv("IMDB.csv")
-IMDBa <- subset(IMDB,!(Nudity=="None"|Violence=="None"|Profanity=="None"|Alcohol=="None"|Frightening=="None"))
 ```
 
 
