@@ -29,7 +29,7 @@ options(scientific=T, digits = 3)
 ```{r}
 IMDB <- read.csv("IMDB.csv")
 ```
-Result : Reads and Assigns the data to a variable called IMDB
+Result : Reads and Assigns the data to a variable called IMDB.
 
 
 ## Histogram and Density plot - Distribution of Rate:
@@ -76,6 +76,8 @@ cat("Standard Deviation of Rate:", sd_Rate, "\n")
 
 ```
 Result : Understanding distribution of rate by calculating summary statistics using Histogram and Density plot.
+
+## Subsets:
 ```{r}
 IMDB_Film <- subset(IMDB,IMDB$Type=="Film")
 head(IMDB_Film)
@@ -83,10 +85,10 @@ head(IMDB_Film)
 IMDB_Series <- subset(IMDB,IMDB$Type == "Series")
 head(IMDB_Series)
 ```
+Result : Creating two subsets of IMDB, i.e: IMDB_Film & IMDB_Series.
 
 
-
-
+## For Movies:
 ```{r}
 #  for movies
 # Calculate summary statistics
@@ -129,11 +131,11 @@ cat("Mode Rate:", mode_Rate, "\n")
 cat("Standard Deviation of Rate:", sd_Rate, "\n")
 
 ```
+Result : Calculated the summary statistics and plotted the distribution of rate using histogram and density plot.
 
 
 
-
-
+## For Series:
 ```{r}
 # for series
 
@@ -177,7 +179,9 @@ cat("Mode Rate:", mode_Rate, "\n")
 cat("Standard Deviation of Rate:", sd_Rate, "\n")
 
 ```
+Result : Calculated the summary statistics and plotted the distribution of rate using histogram and density plot.
 
+## For both Film & Series:
 ```{r}
 library(ggplot2)
 library(plotly)
@@ -200,12 +204,12 @@ PVR <- ggplot() +
 ggplotly(PVR)
 
 ```
+Result : Plotted both film & Series using Scatter plot.
 
 
 
 
-
-
+## For Genre:
 ```{r}
 
 library(tidyr)
@@ -235,7 +239,9 @@ PGRA <- df_avg %>%
 ggplotly(PGRA)
 
 ```
+Result : Average rating and bar plot was calculated for each genre.
 
+## 
 ```{r}
 
 df_tidy <- df %>%
