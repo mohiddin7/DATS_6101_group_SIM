@@ -1,9 +1,8 @@
 ---
-title: "MID Project"
+title: "EDA"
 author: "TEAM SIM"
-date: "2023-03-02"
-output:
-  html_document:
+date: "2023-03-23"
+output: html_document:
     code_folding: hide
     number_sections: false
     toc: yes
@@ -26,362 +25,379 @@ options(scientific=T, digits = 3)
 # use scipen=999 to prevent scientific notation at all times
 ```
 
-## Data Cleaning and Formating
-
-### Reading the RAW CSV file 
-```{r}
-#Reading the Raw CSV of IMDB Data Frame
-IMDB_raw <- read.csv("imdb_SIM_raw.csv")
-summary(IMDB_raw)
-```
-
-
-
-
 
 ```{r}
-# Removing all the duplicate data from the df IMDB
-library(dplyr)
-IMDB_noduplicates <- distinct(IMDB_raw, Name, .keep_all = TRUE)
-write.csv(IMDB_noduplicates, "IMDB_noduplicates.csv")
-```
-
-### Heading 2
-
-```{r}
-# the duplicated rows that are removed are just stored into a New CSV file just for reference and presentation
-dup_idx <- duplicated(IMDB_raw)
-dup_rows <- IMDB_raw[dup_idx, ]
-dup_rows
-write.csv(dup_rows,"IMDB_duplicate_rows.csv")
-```
-
-```{r}
-sum(is.na(IMDB_noduplicates))
-```
-
-```{r}
-dim(IMDB_noduplicates)
-```
-
-
-```{r}
-head(IMDB_noduplicates)
-```
-
-
-```{r}
-str(IMDB_noduplicates)
-```
-
-
-```{r}
-summary(IMDB_noduplicates)
-```
-
-Rate Variable must be Numeric.Let's Check if "Rate" is Numeric or not `r is.numeric(IMDB_noduplicates$Rate)`
-
-
-
-
-```{r}
-# Pulling out the list of non numeric or float values in the "Rate" Variable
-non_float_rate <- IMDB_noduplicates$Rate[!is.double(IMDB_noduplicates$Rate)]
-
-# Get unique non-float values in "Rate"
-unique(non_float_rate)
-```
-```{r}
-
-# we see that first row data of Rate is numeric. But lets see how R is reading the same.
-class(IMDB_noduplicates$Rate[1])
-```
-Now that we know from Rate variable it had both float and character data types but R is understanding that other float values are also characters. so lets do two things (1) Removing all the rows with "No Rate" data in IMDB data frame.
-                                  (2) Check and convert the Rate variable to float
-
-```{r}
-# Remove rows with "No Rate" from data frame
-IMDB <- subset(IMDB_noduplicates, Rate != "No Rate")
-write.csv(IMDB, file="IMDB.csv")
-```
-
-Rate is till the type `r class(IMDB$Rate)` data. so lets convert it into float
-
-
-```{r}
-# Convert "Rate" column to float
-IMDB$Rate <- as.numeric(IMDB$Rate)
-```
-Rate is now converted to `r class(IMDB$Rate)` data type.
-
-
-
-
-
-```{r}
-
-# Create a histogram of the Rate variable
-hist(IMDB$Rate, 
-     main = "Distribution of Movie Ratings", 
-     xlab = "Rating", 
-     ylab = "Frequency",
-     breaks = 20,
-     col = "#69b3a2",
-     border = "white",
-     xlim = c(0, 10),
-     ylim = c(0, 1200),
-     las = 1)
-
-# Add a vertical line at the mean rating
-abline(v = mean(IMDB$Rate), 
-       col = "red", 
-       lty = 2, 
-       lwd = 2)
-
-# Add a legend
-legend("topright", 
-       legend = c("Mean Rating"), 
-       col = c("red"), 
-       lty = c(2), 
-       lwd = c(2), 
-       bty = "n", 
-       cex = 0.8)
-
-```
-
-
-```{r}
-plot(IMDB[order(IMDB$Rate),]$Rate, 
-     type = "l", # line plot
-     col = "blue", # line color
-     lwd = 2, # line width
-     xlab = "Movie Index", # x-axis label
-     ylab = "IMDB Rating", # y-axis label
-     main = "IMDB Movie Ratings", # plot title
-     ylim = c(0, 10)) # y-axis limits
-
-# Add a grid
-grid()
-
-# Add a horizontal line at mean rating
-abline(h = mean(IMDB$Rate), 
-       col = "red", # line color
-       lty = "dashed") # line style
-
-# Add a legend
-legend("topleft", 
-       legend = c("IMDB Rating", "Mean Rating"), 
-       col = c("blue", "red"), 
-       lty = c(1, 2), 
-       lwd = c(2, 1))
-```
-
-
-
-```{r}
-summary(IMDB)
-
-```
-
-```{r}
-head(IMDB$Votes)
-```
-
-
-```{r}
-IMDB$Votes <- gsub(",","",IMDB$Votes)
-head(IMDB$Votes)
-class(IMDB$Votes)
-```
-
- 
-
-
-```{r}
-non_numeric_votes <- IMDB$Votes[!is.numeric(IMDB$Votes)]
-
-# Get unique non-numeric values in "Votes"
-
-```
-
-
-```{r}
-IMDB$Votes <- as.numeric(IMDB$Votes)
-class(IMDB$Votes)
-```
-
-```{r}
-hist(IMDB$Votes, 
-     main = "Distribution of Movie Votings", 
-     xlab = "Votes", 
-     ylab = "Frequency",
-     breaks = 20,
-     col = "#69b3a2",
-     border = "white"
-     )
-
-# Add a vertical line at the mean rating
-abline(v = mean(IMDB$Votes), 
-       col = "red", 
-       lty = 2, 
-       lwd = 2)
-
-# Add a legend
-legend("topright", 
-       legend = c("Mean Rating"), 
-       col = c("red"), 
-       lty = c(2), 
-       lwd = c(2), 
-       bty = "n", 
-       cex = 0.8)
-
+IMDB <- read.csv("IMDB.csv")
+IMDBa <- subset(IMDB,!(Nudity=="None"|Violence=="None"|Profanity=="None"|Alcohol=="None"|Frightening=="None"))
 ```
 
 
 
 
 ```{r}
-plot(IMDB[order(IMDB$Votes),]$Votes, 
-     type = "l", # line plot
-     col = "blue", # line color
-     lwd = 2, # line width
-     xlab = "Movie Index", # x-axis label
-     ylab = "IMDB Voting", # y-axis label
-     main = "IMDB Movie Votings" # plot title
-     ) # y-axis limits
+# for IMDB whole
+# Calculate summary statistics
+mean_Rate <- mean(IMDB$Rate)
+median_Rate <- median(IMDB$Rate)
+mode_Rate <- as.numeric(names(sort(table(IMDB$Rate), decreasing = TRUE)[1]))
+sd_Rate <- sd(IMDB$Rate)
 
-# Add a grid
-grid()
+# Plot the distribution of Rate using a histogram
+ggplot(data = IMDB, aes(x = Rate)) +
+  geom_histogram(binwidth = 0.5, color = "#000000", fill = "#FFFEA4") +
+  ggtitle("Distribution of Popularity on IMDB") +
+  xlab("Popularity (Rate)") +
+  ylab("Count") +
+  geom_vline(xintercept = mean_Rate, color = "#0F0069", linetype = "dashed",linewidth = 1) +
+  geom_vline(xintercept = median_Rate, color = "#690000", linetype = "dashed",linewidth = 1) +
+  geom_vline(xintercept = mode_Rate, color = "#006907", linetype = "dashed",linewidth = 1) +
+  annotate("text", x = mean_Rate + 0.5, y = 50, label = paste0("Mean: ", round(mean_Rate, 2)),color="#0F0069") +
+  annotate("text", x = median_Rate + 0.5, y = 250, label = paste0("Median: ", round(median_Rate, 2)),color="#690000") +
+  annotate("text", x = mode_Rate + 0.5, y = 500, label = paste0("Mode: ", mode_Rate),color="#006907") +
+  annotate("text", x = 6, y = 80, label = paste0("SD: ", round(sd_Rate, 2)))
 
-# Add a vertical line at the mean rating
-abline(h = mean(IMDB$Votes), 
-       col = "red", # line color
-       lty = "dashed") # line style
+# Alternatively, plot the distribution of Rate using a density plot
+ggplot(data = IMDB, aes(x = Rate)) +
+  geom_density(color = "#BFBC00", fill = "#FFFEA4", alpha = 0.3) +
+  ggtitle("Distribution of Popularity on IMDB") +
+  xlab("Popularity (Rate)") +
+  ylab("Density") +
+  geom_vline(xintercept = mean_Rate, color = "#0F0069", linetype = "dashed",linewidth = 1) +
+  geom_vline(xintercept = median_Rate, color = "#690000", linetype = "dashed",linewidth = 1) +
+  geom_vline(xintercept = mode_Rate, color = "#006907", linetype = "dashed",linewidth = 1) +
+  annotate("text", x = mean_Rate + 0.5, y = 0.1, label = paste0("Mean: ", round(mean_Rate, 2)),color="#0F0069") +
+  annotate("text", x = median_Rate + 0.5, y = 0.2, label = paste0("Median: ", round(median_Rate, 2)),color="#690000") +
+  annotate("text", x = mode_Rate + 0.5, y = 0.3, label = paste0("Mode: ", mode_Rate),color="#006907") +
+  annotate("text", x = 6, y = 0.2, label = paste0("SD: ", round(sd_Rate, 2)))
 
-# Add a legend
-legend("topleft", 
-       legend = c("IMDB Voting", "Mean Voting"), 
-       col = c("blue", "red"), 
-       lty = c(1, 2), 
-       lwd = c(2, 1))
-```
-
-
-
-```{r, results='asis'}
-non_numeric_Duration <- IMDB$Duration[!is.numeric(IMDB$Duration)]
-
-# Get unique non-numeric values in "Votes"
-unique(non_numeric_Duration)
-
-# Remove rows with "None" from data frame
-IMDB <- subset(IMDB, Duration != "None")
-write.csv(IMDB, file="IMDB.csv")
-class(IMDB$Duration)
-
-IMDB$Duration <- as.integer(IMDB$Duration)
-
-print(summary(IMDB))
-```
-
-
-```{r}
-
-```
-
-
-```{r}
-hist(IMDB$Duration, 
-     main = "Distribution of IMDB Duration", 
-     xlab = "Duration", 
-     ylab = "Frequency",
-     breaks = 20,
-     col = "#8F74FF",
-     border = "white"
-     )
-
-# Add a vertical line at the mean rating
-abline(v = mean(IMDB$Duration), 
-       col = "red", 
-       lty = 2, 
-       lwd = 2)
-
-# Add a legend
-legend("topright", 
-       legend = c("Mean Duration"), 
-       col = c("red"), 
-       lty = c(2), 
-       lwd = c(2), 
-       bty = "n", 
-       cex = 0.8)
+cat("Mean Rate:", mean_Rate, "\n")
+cat("Median Rate:", median_Rate, "\n")
+cat("Mode Rate:", mode_Rate, "\n")
+cat("Standard Deviation of Rate:", sd_Rate, "\n")
 
 ```
 
 ```{r}
-plot(IMDB[order(IMDB$Duration),]$Duration, 
-     type = "l", # line plot
-     col = "#8F74FF", # line color
-     lwd = 2, # line width
-     xlab = "Movie Index", # x-axis label
-     ylab = "Duration", # y-axis label
-     main = "IMDB Duration") # plot title
+IMDB_Film <- subset(IMDB,IMDB$Type=="Film")
+head(IMDB_Film)
 
-# Add a grid
-grid()
-
-# Add a horizontal line at mean rating
-abline(h = mean(IMDB$Duration), 
-       col = "red", # line color
-       lty = "dashed") # line style
-
-# Add a legend
-legend("topleft", 
-       legend = c("IMDB Duration", "Mean Duration"), 
-       col = c("#8F74FF", "red"), 
-       lty = c(1, 2), 
-       lwd = c(2, 1))
+IMDB_Series <- subset(IMDB,IMDB$Type == "Series")
+head(IMDB_Series)
 ```
+
+
 
 
 ```{r}
-head(IMDB$Genre)
+#  for movies
+# Calculate summary statistics
+mean_Rate <- mean(IMDB_Film$Rate)
+median_Rate <- median(IMDB_Film$Rate)
+mode_Rate <- as.numeric(names(sort(table(IMDB_Film$Rate), decreasing = TRUE)[1]))
+sd_Rate <- sd(IMDB_Film$Rate)
+
+# Plot the distribution of Rate using a histogram
+ggplot(data = IMDB_Film, aes(x = Rate)) +
+  geom_histogram(binwidth = 0.5, color = "#000000", fill = "#FFFEA4") +
+  ggtitle("Distribution of Popularity on IMDB_Film") +
+  xlab("Popularity (Rate)") +
+  ylab("Count") +
+  geom_vline(xintercept = mean_Rate, color = "#0F0069", linetype = "dashed",linewidth = 1) +
+  geom_vline(xintercept = median_Rate, color = "#690000", linetype = "dashed",linewidth = 1) +
+  geom_vline(xintercept = mode_Rate, color = "#006907", linetype = "dashed",linewidth = 1) +
+  annotate("text", x = mean_Rate + 0.5, y = 50, label = paste0("Mean: ", round(mean_Rate, 2)),color="#0F0069") +
+  annotate("text", x = median_Rate + 0.5, y = 250, label = paste0("Median: ", round(median_Rate, 2)),color="#690000") +
+  annotate("text", x = mode_Rate + 0.5, y = 500, label = paste0("Mode: ", mode_Rate),color="#006907") +
+  annotate("text", x = 6, y = 80, label = paste0("SD: ", round(sd_Rate, 2)))
+
+# Alternatively, plot the distribution of Rate using a density plot
+ggplot(data = IMDB_Film, aes(x = Rate)) +
+  geom_density(color = "#BFBC00", fill = "#FFFEA4", alpha = 0.3) +
+  ggtitle("Distribution of Popularity on IMDB_Film") +
+  xlab("Popularity (Rate)") +
+  ylab("Density") +
+  geom_vline(xintercept = mean_Rate, color = "#0F0069", linetype = "dashed",linewidth = 1) +
+  geom_vline(xintercept = median_Rate, color = "#690000", linetype = "dashed",linewidth = 1) +
+  geom_vline(xintercept = mode_Rate, color = "#006907", linetype = "dashed",linewidth = 1) +
+  annotate("text", x = mean_Rate + 0.5, y = 0.1, label = paste0("Mean: ", round(mean_Rate, 2)),color="#0F0069") +
+  annotate("text", x = median_Rate + 0.5, y = 0.2, label = paste0("Median: ", round(median_Rate, 2)),color="#690000") +
+  annotate("text", x = mode_Rate + 0.5, y = 0.3, label = paste0("Mode: ", mode_Rate),color="#006907") +
+  annotate("text", x = 6, y = 0.2, label = paste0("SD: ", round(sd_Rate, 2)))
+
+cat("Mean Rate:", mean_Rate, "\n")
+cat("Median Rate:", median_Rate, "\n")
+cat("Mode Rate:", mode_Rate, "\n")
+cat("Standard Deviation of Rate:", sd_Rate, "\n")
+
 ```
 
-```{r }
-values <- unlist(strsplit(IMDB$Genre, ","))
-unique(values)
+
+
+
+
+```{r}
+# for series
+
+# Calculate summary statistics
+mean_Rate <- mean(IMDB_Series$Rate)
+median_Rate <- median(IMDB_Series$Rate)
+mode_Rate <- as.numeric(names(sort(table(IMDB_Series$Rate), decreasing = TRUE)[1]))
+sd_Rate <- sd(IMDB_Series$Rate)
+
+# Plot the distribution of Rate using a histogram
+ggplot(data = IMDB_Series, aes(x = Rate)) +
+  geom_histogram(binwidth = 0.5, color = "#000000", fill = "#FFFEA4") +
+  ggtitle("Distribution of Popularity on IMDB_Series") +
+  xlab("Popularity (Rate)") +
+  ylab("Count") +
+  geom_vline(xintercept = mean_Rate, color = "#0F0069", linetype = "dashed",linewidth = 1) +
+  geom_vline(xintercept = median_Rate, color = "#690000", linetype = "dashed",linewidth = 1) +
+  geom_vline(xintercept = mode_Rate, color = "#006907", linetype = "dashed",linewidth = 1) +
+  annotate("text", x = mean_Rate + 0.5, y = 50, label = paste0("Mean: ", round(mean_Rate, 2)),color="#0F0069") +
+  annotate("text", x = median_Rate + 0.5, y = 250, label = paste0("Median: ", round(median_Rate, 2)),color="#690000") +
+  annotate("text", x = mode_Rate + 0.5, y = 500, label = paste0("Mode: ", mode_Rate),color="#006907") +
+  annotate("text", x = 6, y = 80, label = paste0("SD: ", round(sd_Rate, 2)))
+
+# Alternatively, plot the distribution of Rate using a density plot
+ggplot(data = IMDB_Series, aes(x = Rate)) +
+  geom_density(color = "#BFBC00", fill = "#FFFEA4", alpha = 0.3) +
+  ggtitle("Distribution of Popularity on IMDB_Series") +
+  xlab("Popularity (Rate)") +
+  ylab("Density") +
+  geom_vline(xintercept = mean_Rate, color = "#0F0069", linetype = "dashed",linewidth = 1) +
+  geom_vline(xintercept = median_Rate, color = "#690000", linetype = "dashed",linewidth = 1) +
+  geom_vline(xintercept = mode_Rate, color = "#006907", linetype = "dashed",linewidth = 1) +
+  annotate("text", x = mean_Rate + 0.5, y = 0.1, label = paste0("Mean: ", round(mean_Rate, 2)),color="#0F0069") +
+  annotate("text", x = median_Rate + 0.5, y = 0.2, label = paste0("Median: ", round(median_Rate, 2)),color="#690000") +
+  annotate("text", x = mode_Rate + 0.5, y = 0.3, label = paste0("Mode: ", mode_Rate),color="#006907") +
+  annotate("text", x = 6, y = 0.2, label = paste0("SD: ", round(sd_Rate, 2)))
+
+cat("Mean Rate:", mean_Rate, "\n")
+cat("Median Rate:", median_Rate, "\n")
+cat("Mode Rate:", mode_Rate, "\n")
+cat("Standard Deviation of Rate:", sd_Rate, "\n")
 
 ```
 
 ```{r}
-IMDB$Genre <- gsub(" ","",IMDB$Genre)
-unique(unlist(strsplit(IMDB$Genre, ",")))
+library(ggplot2)
+library(plotly)
+
+
+
+# Plot films and series on the same scatter plot
+PVR <- ggplot() +
+  # Films
+  geom_point(data = IMDB_Film, aes(x = Votes, y = Rate, color = "Film"), size = 0.5) +
+  # TV Series
+  geom_point(data = IMDB_Series, aes(x = Votes, y = Rate, color = "TV Series"), size = 0.5) +
+  # Add x and y axis labels
+  labs(x = "Votes", y = "IMDB Rating") +
+  # Add title
+  ggtitle("IMDB Rating vs Votes for Films and TV Series") +
+  # Add legend
+  scale_color_manual(name = "Type", values = c("Film" = "#A90500", "TV Series" = "#0012A9"))
+
+ggplotly(PVR)
+
 ```
 
+
+
+
+
+
 ```{r}
-library(highcharter)
+
 library(tidyr)
+df <- IMDB %>% separate_rows(Genre, sep = ",")
 
 tidy_genres <- function(IMDB) {
   df %>%
     separate_rows(Genre, sep = ",")
 }
 
+# getting the average rating for each genre
+df_avg <- df %>%
+  tidy_genres() %>%
+  group_by(Genre) %>%
+  summarise(avg_rating = mean(Rate))
 
-g_df <- as.data.frame(table(df$Genre))
-g_hc <- g_df  %>%
-  hchart(
-    "pie", hcaes(x = Var1, y = Freq),
-    name = "Genre Movies or Series",
-        dataLabels = list(enabled = TRUE, format='{point.name}: {point.y} ({point.percentage:.1f}%)')
+# creating a bar plot with different colors for each genre
+PGRA <- df_avg %>%
+  ggplot(aes(x = Genre, y = avg_rating, fill = Genre)) +
+  geom_col() +
+  scale_fill_hue(name = "Genre") +
+  labs(title = "Average Rating by Genre",
+       x = "Genre",
+       y = "Average Rating")+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
-    )
+ggplotly(PGRA)
 
-  ghtml <-  hc_title(g_hc,text = "Genre Frequency in IMDB") %>%
-            hc_subtitle(text = "Pie Chart")
-htmlwidgets::saveWidget(ghtml, file = "ghtml.html")
-ghtml
 ```
+
+```{r}
+
+df_tidy <- df %>%
+  tidy_genres()
+
+genre_colors <- c("Action" = "#FFA500", "Adventure" = "#FFC0CB", "Thriller" = "#FFD700",
+                  "Crime" = "#00FFFF", "Drama" = "#4169E1", "Sci-Fi" = "#9400D3",
+                  "Comedy" = "#32CD32", "Sport" = "#FF69B4", "Horror" = "#FF4500",
+                  "Mystery" = "#8B008B")
+
+
+# create the box plot
+PGR <- ggplot(df_tidy, aes(x = Genre, y = Rate)) +
+  geom_boxplot() +
+  scale_fill_manual(values = genre_colors) +
+  labs(title = "Distribution of Ratings by Genre",
+       x = "Genre",
+       y = "Rating")+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+ggplotly(PGR)
+
+
+```
+
+
+
+```{r}
+library(ggplot2)
+
+
+genre_colors <- c("Action" = "#FFA500", "Adventure" = "#FFC0CB", "Thriller" = "#FFD700",
+                  "Crime" = "#00FFFF", "Drama" = "#4169E1", "Sci-Fi" = "#9400D3",
+                  "Comedy" = "#32CD32", "Sport" = "#FF69B4", "Horror" = "#FF4500",
+                  "Mystery" = "#8B008B")
+
+# create box plot
+ggplot(data = IMDB, aes(x = Certificate, y = Rate)) +
+  geom_boxplot() +
+  scale_fill_manual(values = genre_colors)+
+  
+  # add axis labels and title
+  labs(title = "IMDB Rating vs. Certificate",
+       x = "Certificate",
+       y = "IMDB Rating")+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+```
+
+
+
+```{r}
+PTR <- ggplot(data = IMDB, aes(x = Type, y = Rate, fill = Type)) + 
+  geom_boxplot() +
+  labs(title = "Distribution of Ratings by Type",
+       x = "Type",
+       y = "Rating") +
+  scale_fill_manual(values = c("#A90500", "#0012A9"))
+ggplotly(PTR)
+```
+
+
+```{r}
+library(ggplot2)
+library(plotly)
+
+# create scatter plot
+p <- ggplot(data = IMDB, aes(x = Duration, y = Rate)) +
+  geom_point(size = 0.5) +
+  
+  # add regression line
+  geom_smooth(method = "lm", se = FALSE) +
+  
+  # add axis labels and title
+  labs(title = "IMDB Rating vs. Duration",
+       x = "Duration (minutes)",
+       y = "IMDB Rating")
+
+# convert ggplot to plotly object
+ggplotly(p)
+
+```
+
+
+```{r}
+library(ggplot2)
+library(plotly)
+
+# create scatter plot
+p <- ggplot(data = IMDB, aes(x = Votes, y = Rate)) +
+  geom_point(size = 0.5) +
+  
+  # add regression line
+  geom_smooth(method = "lm", se = FALSE) +
+  
+  # add axis labels and title
+  labs(title = "IMDB  Rating vs. Votes",
+       x = "Votes",
+       y = "IMDB Rating")
+
+# convert ggplot to plotly object
+ggplotly(p)
+
+```
+
+
+
+```{r}
+
+library(ggplot2)
+library(plotly)
+
+# create scatter plot
+p <- ggplot(data = IMDB_Series, aes(x = Episodes, y = Rate)) +
+  geom_point(size = 0.5) +
+  
+  # add regression line
+  geom_smooth(method = "lm", se = FALSE) +
+  
+  # add axis labels and title
+  labs(title = "IMDB Series Rating vs. Episodes",
+       x = "Episodes",
+       y = "IMDB Series Rating")
+
+# convert ggplot to plotly object
+ggplotly(p)
+
+```
+
+
+
+
+
+
+```{r}
+# create scatter plot
+ggplot(data = IMDB, aes(x = Rate, y = Nudity)) +
+  geom_point(aes(color = "Nudity")) +
+  
+  # add other scatter plots
+  geom_point(aes(x = Rate, y = Violence, color = "Violence")) +
+  geom_point(aes(x = Rate, y = Profanity, color = "Profanity")) +
+  geom_point(aes(x = Rate, y = Alcohol, color = "Alcohol")) +
+  geom_point(aes(x = Rate, y = Frightening, color = "Frightening")) +
+  
+  # add axis labels and title
+  labs(title = "IMDB Rating vs. Content Ratings",
+       x = "IMDB Rating",
+       y = "Content Rating") +
+  
+  # add legend
+  scale_color_manual(name = "Content Rating",
+                     values = c(Nudity = "red",
+                                Violence = "blue",
+                                Profanity = "green",
+                                Alcohol = "purple",
+                                Frightening = "orange"))
+
+```
+
+
 
 
 
@@ -390,97 +406,77 @@ ghtml
 
 
 ```{r}
-IMDB$Episodes <- gsub("-","0",IMDB$Episodes)
-head(IMDB$Episodes)
-write.csv(IMDB, file="IMDB.csv")
+library(ggcorrplot)
 
-class(IMDB$Episodes)
-IMDB$Episodes <- as.numeric(IMDB$Episodes)
-class(IMDB$Episodes)
+library(dplyr)
 
-summary(IMDB)
+# Select relevant numeric variables for correlation matrix
+numeric_vars <- IMDB %>% 
+  select_if(is.numeric)
+# Compute the correlation matrix
+cor_matrix <- cor(numeric_vars)
+
+# Create the heatmap using ggcorrplot
+ggcorrplot(cor_matrix, type = "lower", hc.order = TRUE, lab = TRUE)
+
 ```
+
 
 
 ```{r}
-summary(IMDB)
+PRN <- ggplot(data = IMDB, aes(x = Nudity, y = Rate, fill = Nudity)) + 
+  geom_boxplot() +
+  labs(title = "Distribution of Ratings by Nudity",
+       x = "Nudity",
+       y = "Rating") +
+  scale_fill_manual(values = c("#A90500", "#0012A9","#C00CC2","#15C20C"))
+ggplotly(PRN)
 
-countn <- (IMDB[IMDB$Type == "Series" & IMDB$Duration > 200, ])
-countn
-IMDB$Duration <- ifelse(IMDB$Type == "Series" & IMDB$Duration > 200, IMDB$Duration/IMDB$Episodes, IMDB$Duration)
 
-summary(IMDB)
+PRV <- ggplot(data = IMDB, aes(x = Violence, y = Rate, fill = Violence)) + 
+  geom_boxplot() +
+  labs(title = "Distribution of Ratings by Violence",
+       x = "Violence",
+       y = "Rating") +
+  scale_fill_manual(values = c("#A90500", "#0012A9","#C00CC2","#15C20C"))
+ggplotly(PRV)
+
+
+PRP <- ggplot(data = IMDB, aes(x = Profanity, y = Rate, fill = Profanity)) + 
+  geom_boxplot() +
+  labs(title = "Distribution of Ratings by Profanity",
+       x = "Profanity",
+       y = "Rating") +
+  scale_fill_manual(values = c("#A90500", "#0012A9","#C00CC2","#15C20C"))
+ggplotly(PRP)
+
+
+PRA <- ggplot(data = IMDB, aes(x = Alcohol, y = Rate, fill = Alcohol)) + 
+  geom_boxplot() +
+  labs(title = "Distribution of Ratings by Alcohol",
+       x = "Alcohol",
+       y = "Rating") +
+  scale_fill_manual(values = c("#A90500", "#0012A9","#C00CC2","#15C20C"))
+ggplotly(PRA)
+
+
+PRF <- ggplot(data = IMDB, aes(x = Frightening, y = Rate, fill = Frightening)) + 
+  geom_boxplot() +
+  labs(title = "Distribution of Ratings by Frightening",
+       x = "Frightening",
+       y = "Rating") +
+  scale_fill_manual(values = c("#A90500", "#0012A9","#C00CC2","#15C20C"))
+ggplotly(PRF)
+
 ```
 
 
-```{r}
-plot(IMDB[order(IMDB$Duration),]$Duration, 
-     type = "l", # line plot
-     col = "blue", # line color
-     lwd = 2, # line width
-     xlab = "Movie Index", # x-axis label
-     ylab = "IMDB Duration", # y-axis label
-     main = "IMDB Movie Duration" # plot title
-     ) # y-axis limits
-
-# Add a grid
-grid()
-
-abline(h = mean(IMDB$Duration), 
-       col = "red", # line color
-       lty = "dashed") # line style
-
-# Add a legend
-legend("topleft", 
-       legend = c("IMDB Duration", "Mean Duration"), 
-       col = c("blue", "red"), 
-       lty = c(1, 2), 
-       lwd = c(2, 1))
-```
-```{r}
-summary(IMDB)
-IMDB$Type <- as.factor(IMDB$Type)
-summary(IMDB)
-```
 
 
-```{r, results='asis'}
-library(highcharter)
-Type_df <- as.data.frame(table(IMDB$Type))
-Type_hc <- Type_df %>%
-  hchart(
-    "pie", hcaes(x = Var1, y = Freq),
-    name = "Type Movies or Series",
-    dataLabels = list(enabled = TRUE, format='{point.name}: {point.y} ({point.percentage:.1f}%)')
-
-    )
-  thtml <- hc_title(Type_hc,text = "Movies or Series Frequency in IMDB") %>%
-           hc_subtitle(text = "Pie Chart")
-htmlwidgets::saveWidget(thtml, file = "thtml.html")
-thtml
-```
 
 
-```{r}
-IMDB$Certificate <- as.factor(IMDB$Certificate)
-```
 
 
-```{r, results='asis'}
-library(highcharter)
-Certificate_df <- as.data.frame(table(IMDB$Certificate))
-Certificate_hc <- Certificate_df %>%
-  hchart(
-    "pie", hcaes(x = Var1, y = Freq),
-    name = "Certificate",
-        dataLabels = list(enabled = TRUE, format='{point.name}: {point.y} ({point.percentage:.1f}%)')
-
-    )
-  chtml <- hc_title(Certificate_hc,text = "Certificate Frequency in IMDB") %>%
-           hc_subtitle(text = "Pie Chart")
-htmlwidgets::saveWidget(chtml, file = "chtml.html")
-chtml
-```
 
 
 
@@ -488,171 +484,124 @@ chtml
 
 
 ```{r}
-temp <- IMDB
-head(temp)
-head(IMDB)
-```
+library(stats)
 
-```{r}
-temp <- subset(temp, (Nudity == "No Rate" & Violence == "No Rate" & Profanity == "No Rate" & Alcohol == "No Rate" & Frightening == "No Rate"))
-temp
-write.csv(temp, file="temp.csv")
-```
+# Fit the ANOVA model
+aov_model <- aov(Rate ~ Nudity + Violence + Profanity + Alcohol + Frightening, data = IMDB)
 
-```{r}
-IMDB <- subset(IMDB, !(Nudity == "No Rate" & Violence == "No Rate" & Profanity == "No Rate" & Alcohol == "No Rate" & Frightening == "No Rate"))
+# Get the ANOVA table
+aov_output <- summary(model)
 
-write.csv(IMDB, file="IMDB.csv")
-```
-
-```{r}
-unique(IMDB$Nudity)
-unique(IMDB$Violence)
-unique(IMDB$Profanity)
-unique(IMDB$Alcohol)
-unique(IMDB$Frightening)
+# Print the ANOVA table
+print(aov_output)
 
 
-IMDB$Nudity <- gsub("No Rate","None",IMDB$Nudity)
-IMDB$Violence <- gsub("No Rate","None",IMDB$Violence)
-IMDB$Profanity <- gsub("No Rate","None",IMDB$Profanity)
-IMDB$Alcohol <- gsub("No Rate","None",IMDB$Alcohol)
-IMDB$Frightening <- gsub("No Rate","None",IMDB$Frightening)
-
-unique(IMDB$Nudity)
-unique(IMDB$Violence)
-unique(IMDB$Profanity)
-unique(IMDB$Alcohol)
-unique(IMDB$Frightening)
-
-write.csv(IMDB, file="IMDB.csv")
+# This table seems to be the output of an ANOVA (Analysis of Variance) test on the relationship between the different content ratings (Nudity, Violence, Profanity, Alcohol, and Frightening) and some other variable(s) in the dataset.
+# 
+# The first column lists the different content ratings, the second column shows the degrees of freedom (DF) for each rating, the third column shows the sum of squares (Sum Sq) for each rating, and the fourth column shows the mean sum of squares (Mean Sq) for each rating.
+# 
+# The fifth column shows the F-value, which is a measure of the variation between the groups relative to the variation within the groups. The larger the F-value, the more significant the relationship between the variable(s) being tested and the content rating.
+# 
+# The sixth column shows the p-value (Pr(>F)), which represents the probability of observing a F-value as extreme or more extreme than the one obtained, assuming that there is no relationship between the variable(s) being tested and the content rating. The lower the p-value, the more significant the relationship.
+# 
+# In this table, the variables Violence, Profanity, Alcohol, and Frightening all have p-values less than 0.05, which suggests that there is a statistically significant relationship between each of these variables and the content rating. The variable Nudity has a p-value greater than 0.05, which suggests that there is no significant relationship between this variable and the content rating.
 ```
 
 
-```{r}
-unique(IMDB$Nudity)
-unique(IMDB$Violence)
-unique(IMDB$Profanity)
-unique(IMDB$Alcohol)
-unique(IMDB$Frightening)
-unique(unlist(strsplit(IMDB$Genre, ",")))
-unique(IMDB$Type)
-unique(IMDB$Certificate)
-```
-
-
-```{r}
- IMDB$Nudity <- as.factor(IMDB$Nudity)
-IMDB$Violence <- as.factor(IMDB$Violence)
-IMDB$Profanity <- as.factor(IMDB$Profanity)
-IMDB$Alcohol <- as.factor(IMDB$Alcohol)
-IMDB$Frightening <- as.factor(IMDB$Frightening)
-
-summary(IMDB)
-```
-
-
-
-```{r, results='asis'}
-library(highcharter)
-Nudity_df <- as.data.frame(table(IMDB$Nudity))
-Nudity_hc <- Nudity_df %>%
-  hchart(
-    "pie", hcaes(x = Var1, y = Freq),
-    name = "Nudity Movies or Series",
-        dataLabels = list(enabled = TRUE, format='{point.name}: {point.y} ({point.percentage:.1f}%)')
-
-    )
-  nhtml <- hc_title(Nudity_hc,text = "Nudity Frequency in IMDB") %>%
-           hc_subtitle(text = "Pie Chart")
-htmlwidgets::saveWidget(nhtml, file = "nhtml.html")
-nhtml
-```
-
-
-
-```{r}
-library(highcharter)
-Violence_df <- as.data.frame(table(IMDB$Violence))
-Violence_hc <- Violence_df %>%
-  hchart(
-    "pie", hcaes(x = Var1, y = Freq),
-    name = "Violence Movies or Series",
-        dataLabels = list(enabled = TRUE, format='{point.name}: {point.y} ({point.percentage:.1f}%)')
-
-    )
-  vhtml <- hc_title(Violence_hc,text = "Violence Frequency in IMDB") %>%
-           hc_subtitle(text = "Pie Chart")
-htmlwidgets::saveWidget(vhtml, file = "vhtml.html")
-vhtml
-```
-
-
-```{r}
-library(highcharter)
-Profanity_df <- as.data.frame(table(IMDB$Profanity))
-Profanity_hc <- Profanity_df %>%
-  hchart(
-    "pie", hcaes(x = Var1, y = Freq),
-    name = "Profanity Movies or Series",
-        dataLabels = list(enabled = TRUE, format='{point.name}: {point.y} ({point.percentage:.1f}%)')
-
-    )
-  phtml <-hc_title(Profanity_hc,text = "Profanity Frequency in IMDB") %>%
-          hc_subtitle(text = "Pie Chart")
-htmlwidgets::saveWidget(phtml, file = "phtml.html")
-phtml
-```
-
-
-```{r}
-library(highcharter)
-Alcohol_df <- as.data.frame(table(IMDB$Alcohol))
-Alcohol_hc <- Alcohol_df %>%
-  hchart(
-    "pie", hcaes(x = Var1, y = Freq),
-    name = "Alcohol Movies or Series",
-        dataLabels = list(enabled = TRUE, format='{point.name}: {point.y} ({point.percentage:.1f}%)')
-
-    )
-  ahtml <-  hc_title(Alcohol_hc,text = "Alcohol Frequency in IMDB") %>%
-            hc_subtitle(text = "Pie Chart")
-htmlwidgets::saveWidget(ahtml, file = "ahtml.html")
-ahtml
-```
-
-```{r}
-library(highcharter)
-Frightening_df <- as.data.frame(table(IMDB$Frightening))
-Frightening_hc <- Frightening_df %>%
-  hchart(
-    "pie", hcaes(x = Var1, y = Freq),
-    name = "Frightening Movies or Series",
-        dataLabels = list(enabled = TRUE, format='{point.name}: {point.y} ({point.percentage:.1f}%)')
-
-    )
-  fhtml <-  hc_title(Frightening_hc,text = "Frightening Frequency in IMDB") %>%
-            hc_subtitle(text = "Pie Chart")
-htmlwidgets::saveWidget(fhtml, file = "fhtml.html")
-fhtml
-```
-
-```{r}
-summary(IMDB)
-```
-
-
-
-```{r}
-head(IMDB)
-```
 
 
 
 
 ```{r}
-write.csv(IMDB, file="IMDB.csv")
+# Fit the ANOVA model
+aov_model_film <- aov(Rate ~ Nudity + Violence + Profanity + Alcohol + Frightening, data = IMDB_Film)
+
+# Get the ANOVA table
+aov_film_output <- summary(aov_model_film)
+
+# Print the ANOVA table
+print(aov_film_output)
 ```
 
+```{r}
+# Fit the ANOVA model
+aov_model_series <- aov(Rate ~ Nudity + Violence + Profanity + Alcohol + Frightening, data = IMDB_Series)
+
+# Get the ANOVA table
+aov_series_output <- summary(aov_model_series)
+
+# Print the ANOVA table
+print(aov_series_output)
+```
+```{r}
+summary(aov(Rate~Nudity,data=IMDB))
+summary(aov(Rate~Nudity,data=IMDB_Film))
+summary(aov(Rate~Nudity,data=IMDB_Series))
+```
+
+```{r}
+summary(aov(Rate~Violence,data=IMDB))
+summary(aov(Rate~Violence,data=IMDB_Film))
+summary(aov(Rate~Violence,data=IMDB_Series))
+```
+
+
+
+```{r}
+summary(aov(Rate~Profanity,data=IMDB))
+summary(aov(Rate~Profanity,data=IMDB_Film))
+summary(aov(Rate~Profanity,data=IMDB_Series))
+```
+
+```{r}
+summary(aov(Rate~Alcohol,data=IMDB))
+summary(aov(Rate~Alcohol,data=IMDB_Film))
+summary(aov(Rate~Alcohol,data=IMDB_Series))
+```
+
+
+```{r}
+summary(aov(Rate~Frightening,data=IMDB))
+summary(aov(Rate~Frightening,data=IMDB_Film))
+summary(aov(Rate~Frightening,data=IMDB_Series))
+```
+
+
+
+
+
+
+```{r}
+lm_model <- lm(Rate ~ Duration , data = IMDB)
+
+# Get the summary of the regression model
+summary(lm_model)
+```
+
+```{r}
+lm_model <- lm(Rate ~ Duration, data = IMDB)
+
+# Get the summary of the regression model
+summary(lm_model)
+```
+
+```{r}
+lm_model <- lm(Rate ~ Votes, data = IMDB)
+
+# Get the summary of the regression model
+summary(lm_model)
+```
+
+
+```{r}
+summary(lm(Rate ~ Episodes, data = IMDB_Series))
+```
+
+
+```{r}
+chisq.test(IMDB$Rate, IMDB$Violence)
+
+
+```
 
 
