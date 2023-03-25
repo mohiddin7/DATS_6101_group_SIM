@@ -36,7 +36,7 @@ options(scientific=T, digits = 3)
 ```{r}
 IMDB <- read.csv("IMDB.csv")
 ```
-Result : Reads and Assigns the data to a variable called IMDB.
+#### Result : Reads and Assigns the data to a variable called IMDB.
 
 
 ## Histogram and Density plot - Distribution of Rate:
@@ -84,7 +84,7 @@ cat("Standard Deviation of Rate:", sd_Rate, "\n")
 ```
 
 
-Result : Understanding distribution of rate by calculating summary statistics using Histogram and Density plot.
+#### Result : Understanding distribution of rate by calculating summary statistics using Histogram and Density plot.
 
 ## Subsets:
 ```{r}
@@ -96,7 +96,7 @@ head(IMDB_Series)
 ```
 
 
-Result : Creating two subsets of IMDB, i.e: IMDB_Film & IMDB_Series.
+#### Result : Creating two subsets of IMDB, i.e: IMDB_Film & IMDB_Series.
 
 
 ## For Movies:
@@ -144,7 +144,7 @@ cat("Standard Deviation of Rate:", sd_Rate, "\n")
 ```
 
 
-Result : Calculated the summary statistics and plotted the distribution of rate using histogram and density plot.
+#### Result : Calculated the summary statistics and plotted the distribution of rate using histogram and density plot.
 
 
 
@@ -194,7 +194,7 @@ cat("Standard Deviation of Rate:", sd_Rate, "\n")
 ```
 
 
-Result : Calculated the summary statistics and plotted the distribution of rate using histogram and density plot.
+#### Result : Calculated the summary statistics and plotted the distribution of rate using histogram and density plot.
 
 ## For both Film & Series:
 ```{r}
@@ -216,7 +216,7 @@ ggplotly(PVR)
 ```
 
 
-Result : Plotted both film & Series using Scatter plot.
+#### Result : Plotted both film & Series using Scatter plot.
 
 
 
@@ -251,7 +251,7 @@ ggplotly(PGRA)
 ```
 
 
-Result : Average rating and bar plot was calculated for each genre.
+#### Result : Average rating and bar plot was calculated for each genre.
 
 ## Colours for Each Genre:
 ```{r}
@@ -280,7 +280,7 @@ ggplotly(PGR)
 ```
 
 
-Result : Colours are assigned to each of the genre to under the analysis results better.
+#### Result : Colours are assigned to each of the genre to under the analysis results better.
 
 ## Box plot for Genre:
 ```{r}
@@ -303,7 +303,7 @@ ggplot(data = IMDB, aes(x = Certificate, y = Rate)) +
 ```
 
 
-Result : Plotted a Box plot to understand the analysis on genre better.
+#### Result : Plotted a Box plot to understand the analysis on genre better.
 
 
 ```{r}
@@ -317,7 +317,7 @@ ggplotly(PTR)
 ```
 
 
-Result : Plotted a box plot to understand the distribution of ratings by type.
+#### Result : Plotted a box plot to understand the distribution of ratings by type.
 
 ## Duration and IMDB rating:
 
@@ -340,7 +340,7 @@ ggplotly(p)
 ```
 
 
-Result : Plotted a scatter plot with a regression line to understand the relationship between IMDB rating and duration.
+#### Result : Plotted a scatter plot with a regression line to understand the relationship between IMDB rating and duration.
 
 
 ## IMDB Rating and votes:
@@ -363,7 +363,7 @@ ggplotly(p)
 ```
 
 
-Result : Plotted a scatter plot with a regression line to understand the relationship between IMDB rating and votes.
+#### Result : Plotted a scatter plot with a regression line to understand the relationship between IMDB rating and votes.
 
 ## IMDB Series rating and Episodes:
 ```{r}
@@ -385,7 +385,7 @@ ggplotly(p)
 ```
 
 
-Result : Plotted a scatter plot with a regression line to understand the relationship between IMDB series rating and episodes.
+#### Result : Plotted a scatter plot with a regression line to understand the relationship between IMDB series rating and episodes.
 
 
 
@@ -418,7 +418,7 @@ ggplot(data = IMDB, aes(x = Rate, y = Nudity)) +
 ```
 
 
-Result : Plotted a scatter plot to understand the relationship between IMDB rating and content ratings.
+#### Result : Plotted a scatter plot to understand the relationship between IMDB rating and content ratings.
 
 
 
@@ -440,7 +440,7 @@ ggcorrplot(cor_matrix, type = "lower", hc.order = TRUE, lab = TRUE)
 ```
 
 
-Results : Computed the correlation matrix and created a heat map using ggcorrplot.
+#### Results : Computed the correlation matrix and created a heat map using ggcorrplot.
 
 ## Ratings and the Characteristics of Film & Series:
 ```{r}
@@ -491,7 +491,7 @@ ggplotly(PRF)
 ```
 
 
-Results : Plotted the Box plot to understand the Distribution of Rating by nudity, violence, profanity, alcohol, frightening.
+#### Results : Plotted the Box plot to understand the Distribution of Rating by nudity, violence, profanity, alcohol, frightening.
 
 
 
@@ -520,7 +520,7 @@ aov_output <- summary(aov_model)
 print(aov_output)
 ```
 
-The variables of Violence, Profanity, Alcohol, and Frightening have a significant difference between them, while the Nudity variable does not have a significant difference. This table provides valuable insights into the differences between the variables in the dataset.
+#### The variables of Violence, Profanity, Alcohol, and Frightening have a significant difference between them, while the Nudity variable does not have a significant difference. This table provides valuable insights into the differences between the variables in the dataset.
 
 
 
@@ -533,9 +533,9 @@ aov_film_output <- summary(aov_model_film)
 
 print(aov_film_output)
 ```
-From the table, we can see that all of the variables have a significant difference between them, with Alcohol and Frightening having the highest F-values and the lowest p-values, indicating that the difference between their average values is the most significant.
+#### From the table, we can see that all of the variables have a significant difference between them, with Alcohol and Frightening having the highest F-values and the lowest p-values, indicating that the difference between their average values is the most significant.
 
-The Nudity, Violence, and Profanity variables also have a significant difference, but not as significant as Alcohol and Frightening.
+#### The Nudity, Violence, and Profanity variables also have a significant difference, but not as significant as Alcohol and Frightening.
 
 
 ## Anova for Content variables with Series
@@ -548,9 +548,9 @@ aov_series_output <- summary(aov_model_series)
 
 print(aov_series_output)
 ```
-From the table, we can see that all of the variables have a significant difference between them, with Violence having the highest F-value and the lowest p-value, indicating that the difference between its average value and the others is the most significant.
+#### From the table, we can see that all of the variables have a significant difference between them, with Violence having the highest F-value and the lowest p-value, indicating that the difference between its average value and the others is the most significant.
 
-The other variables of Nudity, Profanity, Alcohol, and Frightening also have a significant difference, but not as significant as Violence.
+#### The other variables of Nudity, Profanity, Alcohol, and Frightening also have a significant difference, but not as significant as Violence.
 
 
 ## Anova for Nudity with Both (Film and series), Film & Series 
@@ -559,11 +559,11 @@ summary(aov(Rate~Nudity,data=IMDB))
 summary(aov(Rate~Nudity,data=IMDB_Film))
 summary(aov(Rate~Nudity,data=IMDB_Series))
 ```
-Film and Series : From the table, we can see that there is no significant difference between the average values of Nudity in the dataset. This is because the p-value is higher than the commonly used alpha level of 0.05.
+####Film and Series : From the table, we can see that there is no significant difference between the average values of Nudity in the dataset. This is because the p-value is higher than the commonly used alpha level of 0.05.
 
-Film : From the table, we can see that the p-value is less than the commonly used alpha level of 0.05, which indicates that there is a significant difference between the average values of Nudity in the dataset. The asterisks (**), next to the p-value, indicate the level of significance; in this case, two asterisks indicate a p-value less than 0.01.
+#### Film : From the table, we can see that the p-value is less than the commonly used alpha level of 0.05, which indicates that there is a significant difference between the average values of Nudity in the dataset. The asterisks (**), next to the p-value, indicate the level of significance; in this case, two asterisks indicate a p-value less than 0.01.
 
-Series: From the table, we can see that the p-value is less than the commonly used alpha level of 0.05, which indicates that there is a significant difference between the average values of Nudity in the dataset.The asterisk (*) next to the p-value indicates the level of significance, where a single asterisk indicates a p-value less than 0.05.
+#### Series: From the table, we can see that the p-value is less than the commonly used alpha level of 0.05, which indicates that there is a significant difference between the average values of Nudity in the dataset.The asterisk (*) next to the p-value indicates the level of significance, where a single asterisk indicates a p-value less than 0.05.
 
 
 
@@ -575,13 +575,13 @@ summary(aov(Rate~Violence,data=IMDB))
 summary(aov(Rate~Violence,data=IMDB_Film))
 summary(aov(Rate~Violence,data=IMDB_Series))
 ```
-Film and Series : In this case, the variable "Violence" has a significant effect on the outcome variable, as the p-value is less than 0.05 (indicated by "*"). Therefore, we reject the null hypothesis that the variable "Violence" has no effect on the outcome variable.
+#### Film and Series : In this case, the variable "Violence" has a significant effect on the outcome variable, as the p-value is less than 0.05 (indicated by "*"). Therefore, we reject the null hypothesis that the variable "Violence" has no effect on the outcome variable.
 
-Film : The table indicates that there is a significant difference between groups (p < 0.01), meaning that the "Violence" variable varies significantly depending on Rate
+#### Film : The table indicates that there is a significant difference between groups (p < 0.01), meaning that the "Violence" variable varies significantly depending on Rate
 
-Series : The results indicate that there is a significant effect of "Violence" on "Rate", as evidenced by the very small p-value (7.4e-06) and the significant F value (8.95). Therefore, we can conclude that "Violence" has a significant impact on the ratings of TV series in this dataset.
+#### Series : The results indicate that there is a significant effect of "Violence" on "Rate", as evidenced by the very small p-value (7.4e-06) and the significant F value (8.95). Therefore, we can conclude that "Violence" has a significant impact on the ratings of TV series in this dataset.
 
-For the variable Violence, there is a statistically significant effect on Rate in all three datasets (p < 0.01), indicating that the amount of violence in a movie or TV show is related to the audience's rating of it.
+#### For the variable Violence, there is a statistically significant effect on Rate in all three datasets (p < 0.01), indicating that the amount of violence in a movie or TV show is related to the audience's rating of it.
 
 
 ```{r}
@@ -590,14 +590,14 @@ summary(aov(Rate~Profanity,data=IMDB_Film))
 summary(aov(Rate~Profanity,data=IMDB_Series))
 ```
 
-These are the ANOVA results for the relationship between "Rate" and "Profanity" in the "IMDB", "IMDB_Film", and "IMDB_Series" datasets. In all three datasets, the "Profanity" variable is significant at the p < .01 level, indicating a significant relationship between the amount of profanity in a movie or series and its rating.
+#### These are the ANOVA results for the relationship between "Rate" and "Profanity" in the "IMDB", "IMDB_Film", and "IMDB_Series" datasets. In all three datasets, the "Profanity" variable is significant at the p < .01 level, indicating a significant relationship between the amount of profanity in a movie or series and its rating.
 
 ```{r}
 summary(aov(Rate~Alcohol,data=IMDB))
 summary(aov(Rate~Alcohol,data=IMDB_Film))
 summary(aov(Rate~Alcohol,data=IMDB_Series))
 ```
-For the variable Alcohol, there is a statistically significant effect on Rate in all three datasets (p < 0.01), indicating that the portrayal of alcohol in movies and TV shows affects how the audience rates them.
+#### For the variable Alcohol, there is a statistically significant effect on Rate in all three datasets (p < 0.01), indicating that the portrayal of alcohol in movies and TV shows affects how the audience rates them.
 
 ```{r}
 summary(aov(Rate~Frightening,data=IMDB))
@@ -622,11 +622,11 @@ print(summary(lm_model))
 ```
 
 
-The intercept is 7.419, which represents the estimated mean rating when the duration is zero. The coefficient for 'Duration' is -0.004764, which indicates that the estimated mean rating decreases by 0.004764 for every additional minute of duration.
+#### The intercept is 7.419, which represents the estimated mean rating when the duration is zero. The coefficient for 'Duration' is -0.004764, which indicates that the estimated mean rating decreases by 0.004764 for every additional minute of duration.
 
-The p-value for the coefficient of 'Duration' is less than 2e-16, which indicates that the relationship between 'Duration' and 'Rate' is statistically significant. The R-squared value is 0.028, which indicates that only 2.8% of the variability in 'Rate' can be explained by 'Duration'.
+#### The p-value for the coefficient of 'Duration' is less than 2e-16, which indicates that the relationship between 'Duration' and 'Rate' is statistically significant. The R-squared value is 0.028, which indicates that only 2.8% of the variability in 'Rate' can be explained by 'Duration'.
 
-The F-statistic is significant with a p-value of less than 2e-16, which confirms that the model is a good fit for the data. The residual standard error is 1.02, which indicates the average difference between the observed 'Rate' and the predicted 'Rate' values is 1.02 units.
+#### The F-statistic is significant with a p-value of less than 2e-16, which confirms that the model is a good fit for the data. The residual standard error is 1.02, which indicates the average difference between the observed 'Rate' and the predicted 'Rate' values is 1.02 units.
 
 
 
@@ -647,7 +647,7 @@ lm_model <- lm(Rate ~ Votes, data = IMDB)
 # Get the summary of the regression model
 summary(lm_model)
 ```
-The regression model for Rate and Votes shows that the p-value for the regression coefficient is less than 0.05, indicating that there is a statistically significant relationship between the two variables. The coefficient estimate for Votes is 1.49e-06, indicating that for every additional vote, the rate increases by approximately 1.49e-06 units. The adjusted R-squared value is 0.0989, indicating that only 9.89% of the variation in Rate is explained by the variation in Votes. Overall, while there is a statistically significant relationship between the two variables, Votes alone does not explain much of the variation in Rate.
+#### The regression model for Rate and Votes shows that the p-value for the regression coefficient is less than 0.05, indicating that there is a statistically significant relationship between the two variables. The coefficient estimate for Votes is 1.49e-06, indicating that for every additional vote, the rate increases by approximately 1.49e-06 units. The adjusted R-squared value is 0.0989, indicating that only 9.89% of the variation in Rate is explained by the variation in Votes. Overall, while there is a statistically significant relationship between the two variables, Votes alone does not explain much of the variation in Rate.
 
 
 ### LM model for Rate and Episodes in Series
@@ -660,9 +660,9 @@ summary(lm(Rate ~ Episodes, data = IMDB_Series))
 
 
 
-This is a simple linear regression model with one predictor variable, Episodes, and one response variable, Rate. The coefficient for Episodes is -2.62e-04, indicating that for each additional episode, the predicted Rate score decreases by approximately 0.00026. The intercept is 7.70e+00, indicating that if a series had zero episodes, the predicted Rate score would be 7.70.
+#### This is a simple linear regression model with one predictor variable, Episodes, and one response variable, Rate. The coefficient for Episodes is -2.62e-04, indicating that for each additional episode, the predicted Rate score decreases by approximately 0.00026. The intercept is 7.70e+00, indicating that if a series had zero episodes, the predicted Rate score would be 7.70.
 
-The p-value for the coefficient of Episodes is less than 0.05, suggesting that the relationship between Episodes and Rate is statistically significant. The R-squared value is 0.075, indicating that the model explains only a small proportion of the variation in the data. The residual standard error is 0.812, indicating that the model's predictions are typically off by about 0.81 on the Rate scale.
+#### The p-value for the coefficient of Episodes is less than 0.05, suggesting that the relationship between Episodes and Rate is statistically significant. The R-squared value is 0.075, indicating that the model explains only a small proportion of the variation in the data. The residual standard error is 0.812, indicating that the model's predictions are typically off by about 0.81 on the Rate scale.
 
 
 
