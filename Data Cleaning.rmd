@@ -1,5 +1,5 @@
 ---
-title: "MID Project"
+title: "Decoding IMDB Popularity"
 author: "TEAM SIM"
 date: "2023-03-02"
 output:
@@ -52,35 +52,34 @@ IMDB_noduplicates <- distinct(IMDB_raw, Name, .keep_all = TRUE)
 write.csv(IMDB_noduplicates, "IMDB_noduplicates.csv")
 ```
 
-### Heading 2
+
 ### Storing the removed duplicates into new CSV file
 ```{r}
 # the duplicated rows that are removed are just stored into a New CSV file just for reference and presentation
 dup_idx <- duplicated(IMDB_raw)
 dup_rows <- IMDB_raw[dup_idx, ]
-dup_rows
 write.csv(dup_rows,"IMDB_duplicate_rows.csv")
 ```
 ### Calculating the number of missing values
 ```{r}
 sum(is.na(IMDB_noduplicates))
 ```
-### returning the dimensions (number of rows and columns) of the dataset 
+### Returning the dimensions (number of rows and columns) of the dataset 
 ```{r}
 dim(IMDB_noduplicates)
 ```
 
-### returning the first six rows of the dataset 
+### Returning the first six rows of the dataset 
 ```{r}
 head(IMDB_noduplicates)
 ```
 
-### structure of dataset
+### Structure of dataset
 ```{r}
 str(IMDB_noduplicates)
 ```
 
-###  summarizing the statistical properties of the variables (no duplicates) in the dataset
+###  Summarizing the statistical properties of the variables (no duplicates) in the dataset
 ```{r}
 summary(IMDB_noduplicates)
 ```
@@ -657,12 +656,13 @@ fhtml
 ```{r}
 summary(IMDB)
 ```
-
+Now, it gives the data that has been cleaned and formatted.
 
 
 ```{r}
 head(IMDB)
 ```
+Viewing the first few rows of a data frame that is been cleaned and formatted
 
 
 
@@ -670,6 +670,6 @@ head(IMDB)
 ```{r}
 write.csv(IMDB, file="IMDB.csv")
 ```
-
+Writing the contents of the IMDB data frame to a CSV file named "IMDB.csv" in the current working directory so that we could read the CSV file while doing Exploratory Data Analysis.
 
 
