@@ -511,7 +511,6 @@ head(IMDB)
 ### Filtering the temp dataframe to include only rows 
 ```{r}
 temp <- subset(temp, (Nudity == "No Rate" & Violence == "No Rate" & Profanity == "No Rate" & Alcohol == "No Rate" & Frightening == "No Rate"))
-temp
 write.csv(temp, file="temp.csv")
 ```
 
