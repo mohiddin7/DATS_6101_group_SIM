@@ -38,7 +38,7 @@ summary(IMDB_raw)
 
 
 
-
+### Removing the Duplicates
 ```{r}
 # Removing all the duplicate data from the df IMDB
 library(dplyr)
@@ -47,7 +47,7 @@ write.csv(IMDB_noduplicates, "IMDB_noduplicates.csv")
 ```
 
 ### Heading 2
-
+### Storing the removed duplicates into new CSV file
 ```{r}
 # the duplicated rows that are removed are just stored into a New CSV file just for reference and presentation
 dup_idx <- duplicated(IMDB_raw)
@@ -55,26 +55,26 @@ dup_rows <- IMDB_raw[dup_idx, ]
 dup_rows
 write.csv(dup_rows,"IMDB_duplicate_rows.csv")
 ```
-
+### Calculating the number of missing values
 ```{r}
 sum(is.na(IMDB_noduplicates))
 ```
-
+### returning the dimensions (number of rows and columns) of the dataset 
 ```{r}
 dim(IMDB_noduplicates)
 ```
 
-
+### returning the first six rows of the dataset 
 ```{r}
 head(IMDB_noduplicates)
 ```
 
-
+### structure of dataset
 ```{r}
 str(IMDB_noduplicates)
 ```
 
-
+###  summarizing the statistical properties of the variables in the dataset
 ```{r}
 summary(IMDB_noduplicates)
 ```
