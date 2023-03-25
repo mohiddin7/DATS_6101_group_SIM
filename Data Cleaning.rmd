@@ -74,15 +74,14 @@ head(IMDB_noduplicates)
 str(IMDB_noduplicates)
 ```
 
-###  summarizing the statistical properties of the variables in the dataset
+###  summarizing the statistical properties of the variables (no duplicates) in the dataset
 ```{r}
 summary(IMDB_noduplicates)
 ```
 
+### Cleaning and formatting the Rate variable
+
 Rate Variable must be Numeric.Let's Check if "Rate" is Numeric or not `r is.numeric(IMDB_noduplicates$Rate)`
-
-
-
 
 ```{r}
 # Pulling out the list of non numeric or float values in the "Rate" Variable
@@ -182,6 +181,10 @@ legend("topleft",
 summary(IMDB)
 
 ```
+This is after removing the character data types which were with value "No Rate" in the data frame and also all the float values were as character type, so had to convert it to the float values.
+
+
+### Cleaning and formatting the Votes variable
 
 ```{r}
 head(IMDB$Votes)
@@ -265,7 +268,7 @@ legend("topleft",
        lty = c(1, 2), 
        lwd = c(2, 1))
 ```
-
+The above code is manipulating and visualizing the "Votes" variable of the "IMDB" data frame, removing commas, converting to numeric, and plotting its distribution and a line plot.
 
 
 ```{r, results='asis'}
