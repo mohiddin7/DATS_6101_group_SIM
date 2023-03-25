@@ -25,14 +25,14 @@ options(scientific=T, digits = 3)
 # use scipen=999 to prevent scientific notation at all times
 ```
 
-
+## Reading CSV file:
 ```{r}
 IMDB <- read.csv("IMDB.csv")
 ```
+Result : Reads and Assigns the data to a variable called IMDB
 
 
-
-
+## Histogram and Density plot - Distribution of Rate:
 ```{r}
 # for IMDB whole
 # Calculate summary statistics
@@ -75,7 +75,7 @@ cat("Mode Rate:", mode_Rate, "\n")
 cat("Standard Deviation of Rate:", sd_Rate, "\n")
 
 ```
-
+Result : Understanding distribution of rate by calculating summary statistics using Histogram and Density plot.
 ```{r}
 IMDB_Film <- subset(IMDB,IMDB$Type=="Film")
 head(IMDB_Film)
