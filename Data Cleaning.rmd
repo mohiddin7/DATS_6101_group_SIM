@@ -100,8 +100,7 @@ unique(non_float_rate)
 # we see that first row data of Rate is numeric. But lets see how R is reading the same.
 class(IMDB_noduplicates$Rate[1])
 ```
-Now that we know from Rate variable it had both float and character data types but R is understanding that other float values are also characters. so lets do two things (1) Removing all the rows with "No Rate" data in IMDB data frame.
-                                  (2) Check and convert the Rate variable to float
+#### Now that we know from Rate variable it had both float and character data types but R is understanding that other float values are also characters. so lets do two things (1) Removing all the rows with "No Rate" data in IMDB data frame. (2) Check and convert the Rate variable to float
 
 ```{r}
 # Remove rows with "No Rate" from data frame
@@ -186,7 +185,7 @@ legend("topleft",
 summary(IMDB)
 
 ```
-This is after removing the character data types which were with value "No Rate" in the data frame and also all the float values were as character type, so had to convert it to the float values.
+#### This is after removing the character data types which were with value "No Rate" in the data frame and also all the float values were as character type, so had to convert it to the float values.
 
 
 ### Cleaning and formatting the Votes variable
@@ -273,7 +272,7 @@ legend("topleft",
        lty = c(1, 2), 
        lwd = c(2, 1))
 ```
-The above code is manipulating and visualizing the "Votes" variable of the "IMDB" data frame, removing commas, converting to numeric, and plotting its distribution and a line plot.
+#### The above code is manipulating and visualizing the "Votes" variable of the "IMDB" data frame, removing commas, converting to numeric, and plotting its distribution and a line plot.
 
 ### Cleaning and Formatting Duration variable
 ```{r, results='asis'}
@@ -349,7 +348,7 @@ legend("topleft",
        lty = c(1, 2), 
        lwd = c(2, 1))
 ```
-The above code first checks for non-numeric values in Duration variable, removes rows with "None" value, converts Duration variable from character to integer data type, prints summary statistics of the data frame, and then creates histograms and line plots to visualize the distribution of Duration variable.
+#### The above code first checks for non-numeric values in Duration variable, removes rows with "None" value, converts Duration variable from character to integer data type, prints summary statistics of the data frame, and then creates histograms and line plots to visualize the distribution of Duration variable.
 
 ### Cleaning and Formatting Genre variable
 ```{r}
@@ -392,7 +391,7 @@ g_hc <- g_df  %>%
 htmlwidgets::saveWidget(ghtml, file = "ghtml.html")
 ghtml
 ```
-The above code reads in data about movies from IMDB, cleans and processes it to remove any missing or non-numeric values in the "Duration" column and split and clean the "Genre" column. It then creates visualizations of the cleaned data using highcharter library, including a histogram and line plot of the duration of movies, as well as a pie chart of the frequency of different movie genres in the dataset. The resulting plots and chart are saved as HTML files.
+#### The above code reads in data about movies from IMDB, cleans and processes it to remove any missing or non-numeric values in the "Duration" column and split and clean the "Genre" column. It then creates visualizations of the cleaned data using highcharter library, including a histogram and line plot of the duration of movies, as well as a pie chart of the frequency of different movie genres in the dataset. The resulting plots and chart are saved as HTML files.
 
 
 
@@ -414,7 +413,7 @@ class(IMDB$Episodes)
 
 summary(IMDB)
 ```
-The above code replaces any hyphens in the "Episodes" column of the IMDB dataset with zeros, converts the column to numeric format, and saves the updated dataset as a CSV file.
+#### The above code replaces any hyphens in the "Episodes" column of the IMDB dataset with zeros, converts the column to numeric format, and saves the updated dataset as a CSV file.
 
 
 ```{r}
@@ -454,7 +453,7 @@ legend("topleft",
        lty = c(1, 2), 
        lwd = c(2, 1))
 ```
-The above code creates a line plot of IMDB movie duration with a horizontal dashed line indicating the mean duration, and adds a legend.
+#### The above code creates a line plot of IMDB movie duration with a horizontal dashed line indicating the mean duration, and adds a legend.
 ### Converting and Summarizing IMDB Data and Changing Type Column to Factor
 ```{r}
 summary(IMDB)
@@ -477,7 +476,7 @@ Type_hc <- Type_df %>%
 htmlwidgets::saveWidget(thtml, file = "thtml.html")
 thtml
 ```
-The above code generates a pie chart using the highcharter package to visualize the frequency of movie and series types in the IMDB dataset. The chart is then saved as an HTML file and displayed in the output using htmlwidgets::saveWidget and thtml.
+#### The above code generates a pie chart using the highcharter package to visualize the frequency of movie and series types in the IMDB dataset. The chart is then saved as an HTML file and displayed in the output using htmlwidgets::saveWidget and thtml.
 
 ```{r}
 IMDB$Certificate <- as.factor(IMDB$Certificate)
@@ -498,7 +497,7 @@ Certificate_hc <- Certificate_df %>%
 htmlwidgets::saveWidget(chtml, file = "chtml.html")
 chtml
 ```
-The above code generates a pie chart showing the frequency of different certificate ratings in the IMDB dataset. It first converts the "Certificate" column to a factor, then creates a data frame with the frequency of each certificate using the "table" function. Finally, it uses the "hchart" function from the "highcharter" package to create a pie chart with data labels and a title. The resulting chart is saved as an interactive HTML file.
+#### The above code generates a pie chart showing the frequency of different certificate ratings in the IMDB dataset. It first converts the "Certificate" column to a factor, then creates a data frame with the frequency of each certificate using the "table" function. Finally, it uses the "hchart" function from the "highcharter" package to create a pie chart with data labels and a title. The resulting chart is saved as an interactive HTML file.
 
 
 
@@ -521,7 +520,7 @@ IMDB <- subset(IMDB, !(Nudity == "No Rate" & Violence == "No Rate" & Profanity =
 
 write.csv(IMDB, file="IMDB.csv")
 ```
-The above code removes all rows from the IMDB dataframe where all five variables Nudity, Violence, Profanity, Alcohol, and Frightening have the value "No Rate"
+#### The above code removes all rows from the IMDB dataframe where all five variables Nudity, Violence, Profanity, Alcohol, and Frightening have the value "No Rate"
 
 ```{r}
 unique(IMDB$Nudity)
@@ -545,7 +544,7 @@ unique(IMDB$Frightening)
 
 write.csv(IMDB, file="IMDB.csv")
 ```
-The above code replaces all instances of "No Rate" in the Nudity, Violence, Profanity, Alcohol, and Frightening columns with "None" and then saves the updated data as a CSV file named "IMDB.csv". It also prints the unique values in each of the columns before and after the replacement.
+#### The above code replaces all instances of "No Rate" in the Nudity, Violence, Profanity, Alcohol, and Frightening columns with "None" and then saves the updated data as a CSV file named "IMDB.csv". It also prints the unique values in each of the columns before and after the replacement.
 
 ### Extracting Unique Values from Multiple Columns in IMDB Dataset
 ```{r}
@@ -586,7 +585,7 @@ Nudity_hc <- Nudity_df %>%
 htmlwidgets::saveWidget(nhtml, file = "nhtml.html")
 nhtml
 ```
-The above code creates a pie chart using highcharter package to display the frequency of Nudity in movies or series in IMDB dataset.
+#### The above code creates a pie chart using highcharter package to display the frequency of Nudity in movies or series in IMDB dataset.
 
 ### Pie chart showing the frequency of violent content in movies and series on IMDB.
 ```{r}
@@ -656,13 +655,13 @@ fhtml
 ```{r}
 summary(IMDB)
 ```
-Now, it gives the data that has been cleaned and formatted.
+#### Now, it gives the data that has been cleaned and formatted.
 
 
 ```{r}
 head(IMDB)
 ```
-Viewing the first few rows of a data frame that is been cleaned and formatted
+#### Viewing the first few rows of a data frame that is been cleaned and formatted
 
 
 
@@ -670,6 +669,6 @@ Viewing the first few rows of a data frame that is been cleaned and formatted
 ```{r}
 write.csv(IMDB, file="IMDB.csv")
 ```
-Writing the contents of the IMDB data frame to a CSV file named "IMDB.csv" in the current working directory so that we could read the CSV file while doing Exploratory Data Analysis.
+#### Writing the contents of the IMDB data frame to a CSV file named "IMDB.csv" in the current working directory so that we could read the CSV file while doing Exploratory Data Analysis.
 
 
