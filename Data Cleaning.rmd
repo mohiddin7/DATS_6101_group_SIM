@@ -18,6 +18,13 @@ output:
 # some of common options (and the defaults) are: 
 # include=T, eval=T, echo=T, results='asis',..., collapse=F, warning=T, message=T, error=T, cache=T, fig.width=6, fig.height=4, fig.dim=c(6,4) #inches, fig.align='left'/'center','right', 
 library(ezids)
+library(highcharter)
+library(tidyr)
+library(ggplot2)
+library(plotly)
+library(ggcorrplot)
+library(dplyr)
+library(stats)
 # knitr::opts_chunk$set(warning = F, results = "markup", message = F)
 knitr::opts_chunk$set(warning = F, results = "asis", message = F)
 options(scientific=T, digits = 3) 
