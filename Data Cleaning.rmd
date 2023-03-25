@@ -48,7 +48,6 @@ summary(IMDB_raw)
 ### Removing the Duplicates
 ```{r}
 # Removing all the duplicate data from the df IMDB
-library(dplyr)
 IMDB_noduplicates <- distinct(IMDB_raw, Name, .keep_all = TRUE)
 write.csv(IMDB_noduplicates, "IMDB_noduplicates.csv")
 ```
@@ -370,8 +369,7 @@ unique(unlist(strsplit(IMDB$Genre, ",")))
 ```
 
 ```{r}
-library(highcharter)
-library(tidyr)
+
 
 df <- IMDB %>% separate_rows(Genre, sep = ",")
 
@@ -458,7 +456,7 @@ legend("topleft",
        lwd = c(2, 1))
 ```
 The above code creates a line plot of IMDB movie duration with a horizontal dashed line indicating the mean duration, and adds a legend.
-
+### Converting and Summarizing IMDB Data and Changing Type Column to Factor
 ```{r}
 summary(IMDB)
 IMDB$Type <- as.factor(IMDB$Type)
@@ -467,7 +465,6 @@ summary(IMDB)
 
 
 ```{r, results='asis'}
-library(highcharter)
 Type_df <- as.data.frame(table(IMDB$Type))
 Type_hc <- Type_df %>%
   hchart(
@@ -481,7 +478,7 @@ Type_hc <- Type_df %>%
 htmlwidgets::saveWidget(thtml, file = "thtml.html")
 thtml
 ```
-
+The above code generates a pie chart using the highcharter package to visualize the frequency of movie and series types in the IMDB dataset. The chart is then saved as an HTML file and displayed in the output using htmlwidgets::saveWidget and thtml.
 
 ```{r}
 IMDB$Certificate <- as.factor(IMDB$Certificate)
@@ -489,7 +486,6 @@ IMDB$Certificate <- as.factor(IMDB$Certificate)
 
 
 ```{r, results='asis'}
-library(highcharter)
 Certificate_df <- as.data.frame(table(IMDB$Certificate))
 Certificate_hc <- Certificate_df %>%
   hchart(
@@ -503,7 +499,7 @@ Certificate_hc <- Certificate_df %>%
 htmlwidgets::saveWidget(chtml, file = "chtml.html")
 chtml
 ```
-
+The above code generates a pie chart showing the frequency of different certificate ratings in the IMDB dataset. It first converts the "Certificate" column to a factor, then creates a data frame with the frequency of each certificate using the "table" function. Finally, it uses the "hchart" function from the "highcharter" package to create a pie chart with data labels and a title. The resulting chart is saved as an interactive HTML file.
 
 
 
@@ -514,7 +510,7 @@ temp <- IMDB
 head(temp)
 head(IMDB)
 ```
-
+### Filtering the temp dataframe to include only rows 
 ```{r}
 temp <- subset(temp, (Nudity == "No Rate" & Violence == "No Rate" & Profanity == "No Rate" & Alcohol == "No Rate" & Frightening == "No Rate"))
 temp
@@ -526,6 +522,7 @@ IMDB <- subset(IMDB, !(Nudity == "No Rate" & Violence == "No Rate" & Profanity =
 
 write.csv(IMDB, file="IMDB.csv")
 ```
+The above code removes all rows from the IMDB dataframe where all five variables Nudity, Violence, Profanity, Alcohol, and Frightening have the value "No Rate"
 
 ```{r}
 unique(IMDB$Nudity)
@@ -549,8 +546,9 @@ unique(IMDB$Frightening)
 
 write.csv(IMDB, file="IMDB.csv")
 ```
+The above code replaces all instances of "No Rate" in the Nudity, Violence, Profanity, Alcohol, and Frightening columns with "None" and then saves the updated data as a CSV file named "IMDB.csv". It also prints the unique values in each of the columns before and after the replacement.
 
-
+### Extracting Unique Values from Multiple Columns in IMDB Dataset
 ```{r}
 unique(IMDB$Nudity)
 unique(IMDB$Violence)
@@ -562,7 +560,7 @@ unique(IMDB$Type)
 unique(IMDB$Certificate)
 ```
 
-
+### Converting columns in IMDB dataset to factors.
 ```{r}
  IMDB$Nudity <- as.factor(IMDB$Nudity)
 IMDB$Violence <- as.factor(IMDB$Violence)
@@ -576,7 +574,6 @@ summary(IMDB)
 
 
 ```{r, results='asis'}
-library(highcharter)
 Nudity_df <- as.data.frame(table(IMDB$Nudity))
 Nudity_hc <- Nudity_df %>%
   hchart(
@@ -590,11 +587,10 @@ Nudity_hc <- Nudity_df %>%
 htmlwidgets::saveWidget(nhtml, file = "nhtml.html")
 nhtml
 ```
+The above code creates a pie chart using highcharter package to display the frequency of Nudity in movies or series in IMDB dataset.
 
-
-
+### Pie chart showing the frequency of violent content in movies and series on IMDB.
 ```{r}
-library(highcharter)
 Violence_df <- as.data.frame(table(IMDB$Violence))
 Violence_hc <- Violence_df %>%
   hchart(
@@ -609,9 +605,9 @@ htmlwidgets::saveWidget(vhtml, file = "vhtml.html")
 vhtml
 ```
 
-
+### Code for creating a pie chart showing the frequency of profanity in movies and series in the IMDB dataset.
 ```{r}
-library(highcharter)
+
 Profanity_df <- as.data.frame(table(IMDB$Profanity))
 Profanity_hc <- Profanity_df %>%
   hchart(
@@ -626,9 +622,8 @@ htmlwidgets::saveWidget(phtml, file = "phtml.html")
 phtml
 ```
 
-
+### Visualization of Alcohol Frequency in IMDB Movies and TV Series as a Pie Chart.
 ```{r}
-library(highcharter)
 Alcohol_df <- as.data.frame(table(IMDB$Alcohol))
 Alcohol_hc <- Alcohol_df %>%
   hchart(
@@ -642,9 +637,9 @@ Alcohol_hc <- Alcohol_df %>%
 htmlwidgets::saveWidget(ahtml, file = "ahtml.html")
 ahtml
 ```
-
+### Generating a pie chart to show the frequency of "frightening" content in movies and series listed on IMDB.
 ```{r}
-library(highcharter)
+
 Frightening_df <- as.data.frame(table(IMDB$Frightening))
 Frightening_hc <- Frightening_df %>%
   hchart(
